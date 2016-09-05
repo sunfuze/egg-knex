@@ -36,7 +36,8 @@
     "cov": "egg-bin cov",
     "lint": "eslint --ext js . --fix",
     "ci": "npm run lint && npm run cov",
-    "autod": "autod"
+    "autod": "autod",
+    "release": "bash release.sh"
   },
   "ci": {
     "version": "4, 6"
@@ -49,6 +50,6 @@
     "url": "https://github.com/okoala/egg-knex/issues"
   },
   "homepage": "https://github.com/okoala/egg-knex#readme",
-  "author": "Koala Huang",
+  "author": "Koala Huang<dapixp@gmail.com>",
   "license": "MIT"
 }
