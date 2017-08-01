@@ -11,5 +11,5 @@ exports.knex = {
       database: 'test',
     },
   },
-  agent: true
+  app: false,
 };
