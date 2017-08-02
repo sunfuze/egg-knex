@@ -108,15 +108,15 @@ exports.mysql = {
 	  dialect: 'mysql',
 	  connection: {
 	    // host
-        host: 'mypay1.devdb.alipay.net',
+        host: 'mysqlhost',
         // 端口号
         port: '3306',
         // 用户名
-        user: 'mobile_pub',
+        user: 'db',
         // 密码
-        password: '-7cda29b2eef25d0e',
+        password: '123456',
         // 数据库名
-        database: 'mobile_pub',
+        database: 'test',
 	  },
     },
 	postgres: {
