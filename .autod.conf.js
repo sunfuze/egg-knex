@@ -11,6 +11,7 @@ module.exports = {
     'egg',
     'egg-bin',
     'egg-mock',
+    'egg-instrument',
     'autod',
     'eslint',
     'eslint-config-egg',

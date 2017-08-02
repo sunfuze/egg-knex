@@ -7,6 +7,7 @@ const pedding = require('pedding');
 const request = require('supertest');
 const utility = require('utility');
 const mm = require('egg-mock');
+// mm.env('local');
 
 describe('test/multiclient.test.js', () => {
   describe('new config', () => {

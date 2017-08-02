@@ -10,8 +10,6 @@ const should = require('should');
 const request = require('supertest');
 const mm = require('egg-mock');
 const utility = require('utility');
-// const path = require('path');
-// const fs = require('fs');
 
 describe('test/knex.test.js', () => {
   let app;
@@ -171,6 +169,20 @@ describe('test/knex.test.js', () => {
     should.exist(result.row);
     result.row.user_id.should.be.a.String;
     result.row.password.should.equal('3');
+  });
+
+  it('should transaction manual commit woking', function* () {
+    const trx = yield app.knex.transaction();
+    const row = yield trx('npm_auth')
+      .first()
+      .orderBy('id', 'desc')
+      .limit(5);
+    row.user_id.should.be.a.String;
+    row.password.should.equal('3');
+    yield trx('npm_auth').update({ password: '4' }).where('id', row.id);
+    yield trx.commit();
+    const user = yield app.knex('npm_auth').first().where('id', row.id);
+    user.password.should.equal('4');
   });
 
   describe('newConfig', () => {
