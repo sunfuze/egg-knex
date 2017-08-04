@@ -1,6 +1,6 @@
 {
   "name": "egg-knex",
-  "version": "1.1.0",
+  "version": "1.2.1",
   "description": "knex plugin for egg",
   "eggPlugin": {
     "name": "knex"
@@ -12,13 +12,13 @@
   "dependencies": {
     "co": "^4.6.0",
     "knex": "^0.12.6",
-    "mysql": "^2.11.1",
-    "mysql2": "^1.1.2"
+    "mysql": "^2.11.1"
   },
   "devDependencies": {
     "autod": "^2.7.1",
     "egg": "~0.5.0",
     "egg-bin": "^1.7.0",
+    "egg-instrument": "^1.1.1",
     "egg-mock": "^1.2.0",
     "eslint": "^3.11.1",
     "eslint-config-egg": "^3.2.0",
@@ -28,7 +28,7 @@
     "utility": "^1.9.0"
   },
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=6.0.0"
   },
   "scripts": {
     "test": "npm run lint && npm run test-local",
@@ -40,7 +40,7 @@
     "release": "bash release.sh"
   },
   "ci": {
-    "version": "4, 6"
+    "version": "6, 8"
   },
   "repository": {
     "type": "git",

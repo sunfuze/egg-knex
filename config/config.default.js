@@ -1,13 +1,15 @@
 'use strict';
 
-exports.mysql = {
+exports.knex = {
   default: {
-    database: null,
-    connectionLimit: 5,
+    dialect: 'mysql',
+    connection: {
+      database: null,
+    },
+    pool: { min: 0, max: 5 },
+    acquireConnectionTimeout: 30000,
   },
-  // 在 app 上初始化
   app: true,
-  // 在 agent 上初始化
   agent: false,
   // 单数据库
   // client: {

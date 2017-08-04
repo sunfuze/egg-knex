@@ -5,6 +5,6 @@ module.exports = function* () {
 
   this.body = {
     status: 'success',
-    users: users,
+    users,
   };
 };

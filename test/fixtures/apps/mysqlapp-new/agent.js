@@ -10,7 +10,7 @@ module.exports = function(agent) {
   fs.existsSync(p) && fs.unlinkSync(p);
 
   co(function* () {
-    const result = yield agent.knex.raw('select now() as currentTime');
-    fs.writeFileSync(p, JSON.stringify(result[0]));
+    const result = yield agent.knex.raw('select now() as currentTime;');
+    fs.writeFileSync(p, JSON.stringify(result));
   }).then(done, done);
 };

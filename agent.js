@@ -1,7 +1,7 @@
 'use strict';
 
-const mysql = require('./lib/mysql');
+const knex = require('./lib/knex');
 
 module.exports = agent => {
-  if (agent.config.mysql.agent) mysql(agent);
+  if (agent.config.knex.agent) knex(agent);
 };
