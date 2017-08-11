@@ -33,7 +33,7 @@ $ npm i egg-knex --save
 Change `${app_root}/config/plugin.js` to enable knex plugin:
 
 ```js
-exports.mysql = {
+exports.knex = {
   enable: true,
   package: 'egg-knex',
 };
