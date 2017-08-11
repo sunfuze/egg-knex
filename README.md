@@ -189,7 +189,7 @@ const insertSuccess = result === 1
 
 ```js
 // get one
-const post = yield app.mysql.first('*').where('id', 12).from('posts')
+const post = yield app.knex.first('*').where('id', 12).from('posts')
 // query
 const results = yield app.knex('posts')
   .select()
