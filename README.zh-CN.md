@@ -281,6 +281,32 @@ yield app.knex(table).insert({
 // INSERT INTO `$table`(`id`, `fullname`) VALUES(123, CONCAT("James", "Bond"))
 ```
 
+
+### SQL 调优
+
+创建数据库索引或者进行 sql 调优，通常第一步是获取 sql 的 `query plan`，而后再去执行 `explain ${sql}`。
+市面上的数据库链接库都没有考虑到这一点，让开发者可以在开发的时候马上获取到每一次 `sql` 的 `query plan`，为了提升开发体验，我们让 `egg-knex` 在 `debug` 模式下可以输出 `query plan` 到日志文件 `egg-web.log` 以及控制台。
+
+首先，修改配置
+> 只建议修改 config.local.js
+```js
+exports.knex = {
+  client: {
+    debug: true, // 开启 debug
+	...
+  }
+}
+```
+
+query plan 例子：
+
+```bash
+2017-08-23 00:33:49,256 INFO 50839 [egg-knex] explain select * from `npm_auth`
+=====> result is: {"id":1,"select_type":"SIMPLE","table":"npm_auth","type":"ALL","possible_keys":null,"key":null,"key_len":null,"ref":null,"rows":380,"Extra":null}
+
+```
+
+
 ## License
 
 [MIT](LICENSE)
