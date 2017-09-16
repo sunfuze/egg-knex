@@ -27,7 +27,11 @@ Knex Plugin 为 egg 提供 [Knex](http://knexjs.org/) 的功能，Knex 支持 Po
 ```js
 config.knex = {
   enable: true,
+<<<<<<< HEAD
   package: '@ali/egg-knex'
+=======
+  package: 'egg-knex'
+>>>>>>> 008aba15ca5974b2782d1327d4878cfb2fafef88
 }
 ```
 
@@ -285,7 +289,7 @@ yield app.knex(table).insert({
 ### SQL 调优
 
 创建数据库索引或者进行 sql 调优，通常第一步是获取 sql 的 `query plan`，而后再去执行 `explain ${sql}`。
-市面上的数据库链接库都没有考虑到这一点，让开发者可以在开发的时候马上获取到每一次 `sql` 的 `query plan`，为了提升开发体验，我们让 `egg-knex` 在 `debug` 模式下可以输出 `query plan` 到日志文件 `egg-web.log` 以及控制台。
+市面上的数据库链接库都没有考虑到这一点，让开发者可以在开发的时候马上获取到每一次 `sql` 的 `query plan`，为了提升开发体验，我们让 `egg-knex` 在 `debug` 模式下可以输出 `query plan` 到日志文件 `egg-knex.log` 以及控制台。
 
 首先，修改配置
 > 只建议修改 config.local.js
