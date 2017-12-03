@@ -29,10 +29,18 @@ describe('test/knex.test.js', () => {
     // 先初始化测试数据，避免为空
     try {
       yield app.knex
-        .insert([
-          { user_id: `egg-${uid}-1`, password: '1' },
-          { user_id: `egg-${uid}-2`, password: '2' },
-          { user_id: `egg-${uid}-3`, password: '3' },
+        .insert([ {
+          user_id: `egg-${uid}-1`,
+          password: '1',
+        },
+        {
+          user_id: `egg-${uid}-2`,
+          password: '2',
+        },
+        {
+          user_id: `egg-${uid}-3`,
+          password: '3',
+        },
         ])
         .into('npm_auth');
     } catch (err) {
@@ -53,8 +61,8 @@ describe('test/knex.test.js', () => {
 
   it('should query mysql user table success', done => {
     request(app.callback())
-    .get('/')
-    .expect(200, done);
+      .get('/')
+      .expect(200, done);
   });
 
   it('should query limit 2', function* () {
@@ -75,7 +83,9 @@ describe('test/knex.test.js', () => {
       .limit(1);
 
     const result = yield app.knex
-      .update({ user_id: `79744-${uid}-update` })
+      .update({
+        user_id: `79744-${uid}-update`,
+      })
       .where('id', user[0].id)
       .from('npm_auth');
 
@@ -105,7 +115,9 @@ describe('test/knex.test.js', () => {
   });
 
   it('should query one not exists return null', function* () {
-    let [ [ user ] ] = yield app.knex.raw('select * from npm_auth where id = -1');
+    let [
+      [ user ],
+    ] = yield app.knex.raw('select * from npm_auth where id = -1');
     should.not.exist(user);
 
     user = yield app.knex('npm_auth').first().where('id', -1);
@@ -163,7 +175,9 @@ describe('test/knex.test.js', () => {
         .first()
         .orderBy('id', 'desc')
         .limit(10);
-      return { row };
+      return {
+        row,
+      };
     });
 
     should.exist(result.row);
@@ -179,10 +193,48 @@ describe('test/knex.test.js', () => {
       .limit(5);
     row.user_id.should.be.a.String;
     row.password.should.equal('3');
-    yield trx('npm_auth').update({ password: '4' }).where('id', row.id);
+    yield trx('npm_auth').update({
+      password: '4',
+    }).where('id', row.id);
     yield trx.commit();
     const user = yield app.knex('npm_auth').first().where('id', row.id);
     user.password.should.equal('4');
+  });
+
+  it('should nested transaction commit should ok', function* () {
+    const trx1 = yield app.knex.transaction();
+    try {
+      const row = yield trx1('npm_auth')
+        .first()
+        .orderBy('id', 'desc')
+        .limit(5);
+      row.user_id.should.be.a.String;
+      row.password.should.equal('3');
+      yield trx1('npm_auth').update({
+        password: '4',
+      }).where('id', row.id);
+
+      const trx2 = yield trx1.transaction();
+      let user;
+
+      user = yield trx2('npm_auth').first().where('id', row.id);
+      user.password.should.equal('4');
+
+      yield trx2('npm_auth').update({
+        password: 'trx2',
+      }).where('id', row.id);
+      yield trx2.commit();
+
+      user = yield trx1('npm_auth').first().where('id', row.id);
+      user.password.should.equal('trx2');
+      yield trx1.commit();
+
+      user = yield app.knex('npm_auth').first().where('id', row.id);
+      user.password.should.equal('trx2');
+    } catch (e) {
+      yield trx1.rollback();
+      throw e;
+    }
   });
 
   describe('newConfig', () => {
@@ -209,8 +261,8 @@ describe('test/knex.test.js', () => {
 
     it('should query mysql user table success', done => {
       request(app.callback())
-      .get('/')
-      .expect(200, done);
+        .get('/')
+        .expect(200, done);
     });
   });
 
@@ -238,8 +290,8 @@ describe('test/knex.test.js', () => {
 
     it('should query mysql user table success', done => {
       request(app.callback())
-      .get('/')
-      .expect(200, done);
+        .get('/')
+        .expect(200, done);
     });
   });
 });

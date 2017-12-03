@@ -1,3 +1,8 @@
+2.0.3 / 2017-12-03
+==================
+  * feat: promisifid transaction support nested transaction
+  * fix: rollback catch Promise.TimeoutError is undefined
+
 2.0.2 / 2017-09-17
 ==================
 

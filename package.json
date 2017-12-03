@@ -1,6 +1,6 @@
 {
   "name": "egg-knex",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "knex plugin for egg",
   "eggPlugin": {
     "name": "knex"
@@ -10,22 +10,23 @@
     "plugin"
   ],
   "dependencies": {
+    "bluebird": "^3.5.1",
     "co": "^4.6.0",
-    "knex": "^0.12.6",
-    "mysql": "^2.11.1"
+    "knex": "^0.14.2",
+    "mysql": "^2.15.0"
   },
   "devDependencies": {
-    "autod": "^2.7.1",
-    "egg": "~0.5.0",
-    "egg-bin": "^1.7.0",
-    "egg-instrument": "^1.1.1",
-    "egg-mock": "^1.2.0",
-    "eslint": "^3.11.1",
-    "eslint-config-egg": "^3.2.0",
+    "autod": "^3.0.1",
+    "egg": "^2.0.0",
+    "egg-bin": "^4.3.6",
+    "egg-instrument": "^2.0.0",
+    "egg-mock": "^3.13.1",
+    "eslint": "^4.12.1",
+    "eslint-config-egg": "^5.1.1",
     "pedding": "^1.1.0",
-    "should": "^11.1.1",
-    "supertest": "^2.0.1",
-    "utility": "^1.9.0"
+    "should": "^13.1.3",
+    "supertest": "^3.0.0",
+    "utility": "^1.13.1"
   },
   "engines": {
     "node": ">=6.0.0"
@@ -51,5 +52,34 @@
   },
   "homepage": "https://github.com/okoala/egg-knex#readme",
   "author": "Koala Huang<dapixp@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "contributors": [
+    {
+      "name": "jiaxin",
+      "email": "songjiaxin2008@gmail.com",
+      "url": "https://github.com/solarhell",
+      "contributions": 1,
+      "additions": 5,
+      "deletions": 5,
+      "hireable": null
+    },
+    {
+      "name": "仙森",
+      "email": "dapixp@gmail.com",
+      "url": "https://github.com/okoala",
+      "contributions": 7,
+      "additions": 694,
+      "deletions": 16,
+      "hireable": null
+    },
+    {
+      "name": "sunfuze",
+      "email": "sunfuze.1989@gmail.com",
+      "url": "https://github.com/sunfuze",
+      "contributions": 11,
+      "additions": 2728,
+      "deletions": 695,
+      "hireable": null
+    }
+  ]
 }
