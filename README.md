@@ -181,6 +181,8 @@ Install dependencies:
 $ npm i --save pg orcaledb
 ```
 
+Add Configurations:
+
 ```js
 exports.knex = {
   clients: {
