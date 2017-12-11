@@ -12,25 +12,33 @@
 [download-url]: https://npmjs.org/package/egg-knex
 
 
-Knex for egg framework. [Knex.js](Knex.js-url) is a "batteries included" SQL query builder for Postgres, MSSQL, MySQL, MariaDB, SQLite3, and Oracle.
+Knex for egg framework.
 
-[Knex.js-url]: http://knexjs.org/
+[Knex](http://knexjs.org/) is a "batteries included" SQL query builder for Postgres, MSSQL, MySQL, MariaDB, SQLite3, and Oracle. `Knex` compare to `ali-rds`:
+1. support multiple type database system
+2. API is all `Promise`, easy to using `async/await`
+3. Community-Driven
+4. Support `stream`
 
-> `Knex` compare to `ali-rds`
-> 1. support multiple type database system
-> 2. API is all `Promise`, easy to using `async/await`
-> 3. Community-Driven
-> 4. Support `stream`
-
-## Install
+## Installation
 
 ```bash
-$ npm i egg-knex --save
+$ npm i --save egg-knex
 ```
 
 ## Configuration
+### Install External Dependencies
+- using `mysql` default support
+- using `mysql2` install dependency `npm i --save mysql2`
+- using `mariadb` install dependency `npm i --save mariasql`
+- using `postgres` install dependency `npm i --save pg`
+- using `mssql` install dependency `npm i --save mssql`
+- using `oracledb` install dependency  `npm i --save oracledb`
+- using `sqlite` install dependency `npm i --save sqlite3`
 
-Change `${app_root}/config/plugin.js` to enable knex plugin:
+### Enable Plugin
+
+Edit `${app_root}/config/plugin.js`:
 
 ```js
 exports.knex = {
@@ -39,42 +47,14 @@ exports.knex = {
 };
 ```
 
-- using `mysql` default support
-- using `mariadb` install dependency `tnpm i --save mariasql`
-- using `postgres` install dependency `tnpm i --save pg`
-- using `mssql` install dependency `tnpm i --save mssql`
-- using `oracledb` install dependency  `tnpm i --save oracledb`
-- using `sqlite` install dependency `tnpm i --save sqlite3`
-
-
-### default configuration
-
-```js
-exports.knex = {
- default: {
-    dialect: 'mysql',
-    connection: {
-      database: null,
-    },
-	  // connection pool
-	  pool: { min: 0, max: 5 },
-    // acquire connection timeout, millisecond
-    acquireConnectionTimeout: 30000,
-  },
-  app: true,
-  agent: false,
-}
-```
-
-Configure database information in `${app_root}/config/config.default.js`:
-
-### Simple database instance
+### Add Configurations
+Edit `${app_root}/config/config.${env}.js`:
 
 ```js
 exports.knex = {
   // database configuration
   client: {
-    // database dialect 
+    // database dialect
     dialect: 'mysql',
     connection: {
       // host
@@ -88,6 +68,10 @@ exports.knex = {
       // database
       database: 'mobile_pub',
     },
+    // connection pool
+    pool: { min: 0, max: 5 },
+    // acquire connection timeout, millisecond
+    acquireConnectionTimeout: 30000,
   },
   // load into app, default is open
   app: true,
@@ -96,16 +80,102 @@ exports.knex = {
 };
 ```
 
-Usage:
+## Usage
+You can access to database instance by using:
 
 ```js
-app.knex// you can access to simple database instance by using app.knex.
+app.knex
+```
+
+### CURD
+
+#### Create
+
+```js
+// insert
+const result = yield app.knex.insert({title: 'Hello World'}).into('posts')
+const insertSuccess = result === 1
+```
+
+> if you want mysql, sqlite, oracle return ids after insert multiple rows,
+> you can choose [`batchInsert`](http://knexjs.org/#Utility-BatchInsert),
+> it will insert raws one by one in a transaction.
+
+#### Read
+
+```js
+// get one
+const post = yield app.knex.first('*').where('id', 12).from('posts')
+// query
+const results = yield app.knex('posts')
+  .select()
+  .where({ status: 'draft' })
+  .orderBy('created_at', 'desc')
+  .orderBy('id', 'desc')
+  .orderByRaw('description DESC NULLS LAST')
+  .offset(0)
+  .limit(10)
+
+// join
+const results = yield app.knex('posts')
+  .innerJoin('groups', 'groups.id', 'posts.group_id')
+  .select('posts.*', 'groups.name');
+```
+
+#### Update
+
+```js
+const row = {
+  name: 'fengmk2',
+  otherField: 'other field value',
+  modifiedAt: app.knex.raw('CURRENT_TIMESTAMP'),
+};
+// Returns [1] in "mysql", "sqlite", "oracle"; [] in "postgresql" unless the 'returning' parameter is set.
+const [affectedRows] = yield app.knex('posts')
+  .update({row})
+  .where(id, 1);
 ```
 
 
+#### Delete
+
+```js
+const affectedRows = yield app.knex('table').where({ name: 'fengmk2' }).del();
+```
+
+### Transaction
+
+`egg-knex` support manual/auto commit.
+
+#### Manual commit
+
+```js
+const trx = yield app.knex.transaction();
+try {
+  yield trx.insert(row1).into('table');
+  yield trx('table').update(row2);
+  yield trx.commit()
+} catch (e) {
+  yield trx.rollback();
+  throw e;
+}
+```
+
+#### Auto commit
+
+```js
+const result = yield app.knex.transaction(function* transacting (trx) {
+  yield trx(table).insert(row1);
+  yield trx(table).update(row2).where(condition);
+  return { success: true };
+});
+```
+
+## Advanced Usage
+
 ### Multiple database instance: mysql + postgres + oracledb
 
-install dependencies
+Install dependencies:
 
 ```bash
 $ npm i --save pg orcaledb
@@ -167,96 +237,6 @@ const oracle = app.knex.get('oracle');
 oracle.raw(sql);
 ```
 
-## CRUD user guide
-
-### Create
-
-[Knex.js insert documents](insert-doc)
-
-[insert-doc]: http://knexjs.org/#Builder-insert
-
-```js
-// insert
-const result = yield app.knex.insert({title: 'Hello World'}).into('posts')
-const insertSuccess = result === 1
-```
-
-> if you want mysql, sqlite, oracle return ids after insert multiple rows,
-> you can choose [`batchInsert`](http://knexjs.org/#Utility-BatchInsert),
-> it will insert raws one by one in a transaction.
-
-### Read
-
-```js
-// get one
-const post = yield app.knex.first('*').where('id', 12).from('posts')
-// query
-const results = yield app.knex('posts')
-  .select()
-  .where({ status: 'draft' })
-  .orderBy('created_at', 'desc')
-  .orderBy('id', 'desc')
-  .orderByRaw('description DESC NULLS LAST')
-  .offset(0)
-  .limit(10)
-
-// join
-const results = yield app.knex('posts')
-  .innerJoin('groups', 'groups.id', 'posts.group_id')
-  .select('posts.*', 'groups.name');
-```
-
-### Update
-
-```js
-const row = {
-  name: 'fengmk2',
-  otherField: 'other field value',
-  modifiedAt: app.knex.raw('CURRENT_TIMESTAMP'), 
-};
-// Returns [1] in "mysql", "sqlite", "oracle"; [] in "postgresql" unless the 'returning' parameter is set.
-const [affectedRows] = yield app.knex('posts')
-  .update({row})
-  .where(id, 1);
-```
-
-
-### Delete
-
-```js
-const affectedRows = yield app.knex('table').where({ name: 'fengmk2' }).del();
-```
-
-## Transaction
-
-`egg-knex` support manual/auto commit.
-
-### Manual commit
-
-```js
-const trx = yield app.knex.transaction();
-try {
-  yield trx.insert(row1).into('table');
-  yield trx('table').update(row2);
-  yield trx.commit()
-} catch (e) {
-  yield trx.rollback();
-  throw e;
-}
-```
-
-### Auto commit
-
-```js
-const result = yield app.knex.transaction(function* transacting (trx) {
-  yield trx(table).insert(row1);
-  yield trx(table).update(row2).where(condition);
-  return { success: true };
-});
-```
-
-## Advance
-
 ### Custom SQL splicing
 
 ```js
@@ -296,5 +276,3 @@ yield app.knex.insert({
 ## License
 
 [MIT](LICENSE)
-
-
