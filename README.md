@@ -28,7 +28,7 @@ $ npm i --save egg-knex
 
 ## Configuration
 ### Install External Dependencies
-- using `mysql` default support
+- using `mysql` default support, there is no need to install any external things
 - using `mysql2` install dependency `npm i --save mysql2`
 - using `mariadb` install dependency `npm i --save mariasql`
 - using `postgres` install dependency `npm i --save pg`
