@@ -1,3 +1,7 @@
+2.0.4 / 2017-12-13
+==================
+  * fix: dialects have own sql to show table list
+
 2.0.3 / 2017-12-03
 ==================
   * feat: promisifid transaction support nested transaction

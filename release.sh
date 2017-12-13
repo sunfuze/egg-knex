@@ -1,3 +1,4 @@
+#! /usr/bin/usr bash
 set -e
 echo "Enter release version: "
 read VERSION
@@ -12,12 +13,11 @@ then
   npm test 2>/dev/null
 
   # commit
-  git add -A
-  git commit -m "[build] $VERSION"
   npm version $VERSION --message "[release] $VERSION"
 
   # publish
-  git push origin refs/tags/v$VERSION
+  git tag v$VERSION
+  git push origin --tags
   git push
   npm publish --registry=https://registry.npmjs.org/
 fi

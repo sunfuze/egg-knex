@@ -1,6 +1,6 @@
 {
   "name": "egg-knex",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "knex plugin for egg",
   "eggPlugin": {
     "name": "knex"
@@ -42,6 +42,9 @@
   },
   "ci": {
     "version": "6, 8"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
   },
   "repository": {
     "type": "git",
