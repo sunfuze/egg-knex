@@ -255,9 +255,25 @@ const result = yield app.knex.transaction(function* transacting (trx) {
 ## 进阶
 
 ### 自定义SQL拼接
+
+- mysql
+
 ```js
-const results = yield app.knex.raw('update posts set hits = (hits + ?) where id = ?', [1, postId]);
+const [ results ] = yield app.knex.raw('update posts set hits = (hits + ?) where id = ?', [1, postId]);
 ```
+
+- pg
+
+```js
+const { rows: result } = yield app.knex.raw('update posts set hits = (hits + ?) where id = ?', [1, postId]);
+```
+
+- mssql
+
+```js
+const result = yield app.knex.raw('update posts set hits = (hits + ?) where id = ?', [1, postId]);
+```
+
 
 
 #### 内置表达式
