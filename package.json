@@ -1,6 +1,6 @@
 {
   "name": "egg-knex",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "knex plugin for egg",
   "eggPlugin": {
     "name": "knex"

@@ -16,27 +16,36 @@ module.exports = app => {
     agent: false,
     // 单数据库
     // client: {
-    //   host: 'host',
-    //   port: 'port',
-    //   user: 'user',
-    //   password: 'password',
-    //   database: 'database',
+    //   dialect: 'mysql',
+    //   connection: {
+    //     host: 'host',
+    //     port: 'port',
+    //     user: 'user',
+    //     password: 'password',
+    //     database: 'database',
+    //   }
     // },
     // 多数据库
     // clients: {
     //   db1: {
-    //     host: 'host',
-    //     port: 'port',
-    //     user: 'user',
-    //     password: 'password',
-    //     database: 'database',
+    //     dialect: 'pg',
+    //     connection: {
+    //       host: 'host',
+    //       port: 'port',
+    //       user: 'user',
+    //       password: 'password',
+    //       database: 'database',
+    //     },
     //   },
     //   db2: {
-    //     host: 'host',
-    //     port: 'port',
-    //     user: 'user',
-    //     password: 'password',
-    //     database: 'database',
+    //     dialect: 'oracle',
+    //     connection: {
+    //       host: 'host',
+    //       port: 'port',
+    //       user: 'user',
+    //       password: 'password',
+    //       database: 'database',
+    //     },
     //   },
     // },
   };

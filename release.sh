@@ -12,9 +12,6 @@ then
   # run tests
   npm test 2>/dev/null
 
-  # commit
-  npm version $VERSION --message "[release] $VERSION"
-
   # publish
   git tag v$VERSION
   git push origin --tags

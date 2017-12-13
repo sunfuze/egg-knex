@@ -259,9 +259,25 @@ const result = yield app.knex.transaction(function* transacting (trx) {
 
 ### Custom SQL splicing
 
+- mysql
+
 ```js
 const [results] = yield app.knex.raw('update posts set hits = (hits + ?) where id = ?', [1, postId]);
 ```
+
+- pg
+
+```js
+const { rows: result } = yield app.knex.raw('update posts set hits = (hits + ?) where id = ?', [1, postId]);
+```
+
+- mssql
+
+```js
+const result = yield app.knex.raw('update posts set hits = (hits + ?) where id = ?', [1, postId]);
+```
+
+> 
 
 ### Raw
 

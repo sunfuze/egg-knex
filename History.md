@@ -1,3 +1,7 @@
+2.0.5 / 2017-12-14
+==================
+  * fix: response of `raw`  will be whatever the underlying sql library
+
 2.0.4 / 2017-12-13
 ==================
   * fix: dialects have own sql to show table list
