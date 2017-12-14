@@ -1,3 +1,7 @@
+2.0.7 / 2917-12-15
+==================
+  * fix: explain sql plan only work on mysql now
+
 2.0.5 / 2017-12-14
 ==================
   * fix: response of `raw`  will be whatever the underlying sql library
