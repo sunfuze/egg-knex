@@ -1,4 +1,7 @@
-2.0.7 / 2917-12-15
+2.0.8 / 2017-12-22
+  * fix: mariadb/mysql 5.5.x version is not support explain sql plan
+
+2.0.7 / 2017-12-15
 ==================
   * fix: explain sql plan only work on mysql now
 

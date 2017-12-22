@@ -1,6 +1,6 @@
 {
   "name": "egg-knex",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "knex plugin for egg",
   "eggPlugin": {
     "name": "knex"
@@ -58,17 +58,17 @@
   "license": "MIT",
   "contributors": [
     {
-      "name": "jiaxin",
-      "email": "songjiaxin2008@gmail.com",
-      "url": "https://github.com/solarhell",
-      "contributions": 1,
-      "additions": 5,
-      "deletions": 5,
+      "name": "sunfuze",
+      "email": null,
+      "url": "https://github.com/sunfuze",
+      "contributions": 17,
+      "additions": 3026,
+      "deletions": 786,
       "hireable": null
     },
     {
       "name": "仙森",
-      "email": "dapixp@gmail.com",
+      "email": null,
       "url": "https://github.com/okoala",
       "contributions": 7,
       "additions": 694,
@@ -76,12 +76,30 @@
       "hireable": null
     },
     {
-      "name": "sunfuze",
-      "email": "sunfuze.1989@gmail.com",
-      "url": "https://github.com/sunfuze",
-      "contributions": 11,
-      "additions": 2728,
-      "deletions": 695,
+      "name": null,
+      "email": null,
+      "url": "https://github.com/m31271n",
+      "contributions": 4,
+      "additions": 107,
+      "deletions": 127,
+      "hireable": null
+    },
+    {
+      "name": "Yanan Che",
+      "email": null,
+      "url": "https://github.com/yolopunk",
+      "contributions": 1,
+      "additions": 6,
+      "deletions": 4,
+      "hireable": true
+    },
+    {
+      "name": "jiaxin",
+      "email": null,
+      "url": "https://github.com/solarhell",
+      "contributions": 1,
+      "additions": 5,
+      "deletions": 5,
       "hireable": null
     }
   ]
