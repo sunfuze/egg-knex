@@ -27,11 +27,7 @@ Knex Plugin 为 egg 提供 [Knex](http://knexjs.org/) 的功能，Knex 支持 Po
 ```js
 config.knex = {
   enable: true,
-<<<<<<< HEAD
-  package: '@ali/egg-knex'
-=======
   package: 'egg-knex'
->>>>>>> 008aba15ca5974b2782d1327d4878cfb2fafef88
 }
 ```
 
