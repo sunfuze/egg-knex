@@ -135,13 +135,10 @@ describe('test/knex.test.js', () => {
       baseDir: 'apps/mysqlapp-multi-client-wrong',
       plugin: 'knex',
     });
-    app.ready(() => {
-      throw new Error('should not run this');
-    });
-    app.agent.on('error', err => {
-      if (err.message.indexOf('ER_ACCESS_DENIED_ERROR') !== -1) {
-        done();
-      }
+
+    app.ready(err => {
+      (err.message.includes('ER_ACCESS_DENIED_ERROR')).should.be.true();
+      done();
     });
   });
 

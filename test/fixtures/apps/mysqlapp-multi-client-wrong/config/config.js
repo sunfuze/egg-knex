@@ -1,5 +1,7 @@
 'use strict';
 
+exports.keys = 'i7oBLQc43aiDCC9zxYrYNw==';
+
 exports.knex = {
   clients: [
     {
