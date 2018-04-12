@@ -16,5 +16,5 @@ then
   git tag v$VERSION
   git push origin --tags
   git push
-  npm publish --registry=https://registry.npmjs.org/
+  npm publish
 fi
