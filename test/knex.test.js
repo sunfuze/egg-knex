@@ -29,7 +29,7 @@ describe('test/knex.test.js', () => {
     // 先初始化测试数据，避免为空
     try {
       yield app.knex
-        .insert([ {
+        .insert([{
           user_id: `egg-${uid}-1`,
           password: '1',
         },
@@ -116,7 +116,7 @@ describe('test/knex.test.js', () => {
 
   it('should query one not exists return null', function* () {
     let [
-      [ user ],
+      [user],
     ] = yield app.knex.raw('select * from npm_auth where id = -1');
     should.not.exist(user);
 
@@ -196,6 +196,22 @@ describe('test/knex.test.js', () => {
     yield trx.commit();
     const user = yield app.knex('npm_auth').first().where('id', row.id);
     user.password.should.equal('4');
+  });
+
+  it('should transaction rollback working', function* () {
+    const trx = yield app.knex.transaction();
+    const row = yield trx('npm_auth')
+      .first()
+      .orderBy('id', 'desc')
+      .limit(5);
+    row.user_id.should.be.a.String;
+    row.password.should.equal('3');
+    yield trx('npm_auth').update({
+      password: '4',
+    }).where('id', row.id);
+    yield trx.rollback();
+    const user = yield app.knex('npm_auth').first().where('id', row.id);
+    user.password.should.equal('3');
   });
 
   it('should nested transaction commit should ok', function* () {
