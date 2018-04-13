@@ -210,6 +210,7 @@ describe('test/knex.test.js', () => {
       password: '4',
     }).where('id', row.id);
     yield trx.rollback();
+    yield trx.commit();
     const user = yield app.knex('npm_auth').first().where('id', row.id);
     user.password.should.equal('3');
   });
