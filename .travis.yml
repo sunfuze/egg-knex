@@ -10,3 +10,4 @@ after_script:
   - npminstall codecov && codecov
 services:
   - mysql
+  - postgresql
