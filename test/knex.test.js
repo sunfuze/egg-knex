@@ -307,4 +307,41 @@ describe('test/knex.test.js', () => {
         .expect(200, done);
     });
   });
+  
+  describe("connectString", () => {
+    let app;
+    before(done => {
+      app = mm.cluster({
+        baseDir: "apps/mysqlapp-connectstring",
+        plugin: "knex"
+      });
+      app.ready(done);
+    });
+
+    after(() => {
+      app.close();
+    });
+
+    it("should agent.knex with connectString work", done => {
+      app.ready(() => {
+        const result = fs.readFileSync(
+          path.join(
+            __dirname,
+            "./fixtures/apps/mysqlapp-connectstring/run/agent_result.json"
+          ),
+          "utf8"
+        );
+        result.should.match(
+          /\[\{"currentTime":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z"\}\]/
+        );
+        done();
+      });
+    });
+
+    it("should query mysql user table success", done => {
+      request(app.callback())
+        .get("/")
+        .expect(200, done);
+    });
+  });
 });
