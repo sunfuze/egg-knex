@@ -6,7 +6,7 @@ exports.knex = {
   client: {
     dialect: "mysql",
     connection: {
-      connectString: "server=127.0.0.1:3306;database=test;uid=root;pwd="
+      connectString: "mysql://root@localhost/test"
     }
   },
   agent: true
