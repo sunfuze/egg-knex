@@ -29,7 +29,7 @@ describe('test/knex.test.js', () => {
     // 先初始化测试数据，避免为空
     try {
       yield app.knex
-        .insert([{
+        .insert([ {
           user_id: `egg-${uid}-1`,
           password: '1',
         },
@@ -116,7 +116,7 @@ describe('test/knex.test.js', () => {
 
   it('should query one not exists return null', function* () {
     let [
-      [user],
+      [ user ],
     ] = yield app.knex.raw('select * from npm_auth where id = -1');
     should.not.exist(user);
 
@@ -307,13 +307,13 @@ describe('test/knex.test.js', () => {
         .expect(200, done);
     });
   });
-  
-  describe("connectString", () => {
+
+  describe('connectString', () => {
     let app;
     before(done => {
       app = mm.cluster({
-        baseDir: "apps/mysqlapp-connectstring",
-        plugin: "knex"
+        baseDir: 'apps/mysqlapp-connectstring',
+        plugin: 'knex',
       });
       app.ready(done);
     });
@@ -322,14 +322,14 @@ describe('test/knex.test.js', () => {
       app.close();
     });
 
-    it("should agent.knex with connectString work", done => {
+    it('should agent.knex with connectString work', done => {
       app.ready(() => {
         const result = fs.readFileSync(
           path.join(
             __dirname,
-            "./fixtures/apps/mysqlapp-connectstring/run/agent_result.json"
+            './fixtures/apps/mysqlapp-connectstring/run/agent_result.json'
           ),
-          "utf8"
+          'utf8'
         );
         result.should.match(
           /\[\{"currentTime":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z"\}\]/
@@ -338,9 +338,9 @@ describe('test/knex.test.js', () => {
       });
     });
 
-    it("should query mysql user table success", done => {
+    it('should query mysql user table success', done => {
       request(app.callback())
-        .get("/")
+        .get('/')
         .expect(200, done);
     });
   });
