@@ -1,4 +1,17 @@
+2.0.11 / 2018-05-15
+==================
+  * fix: support mysql connection string
+
+2.0.10 / 2018-04-12
+==================
+  * fix: make rollback working for pg
+
+2.0.9 / 2018-03-05
+==================
+  * fix: make oracledb run
+
 2.0.8 / 2017-12-22
+==================
   * fix: mariadb/mysql 5.5.x version is not support explain sql plan
 
 2.0.7 / 2017-12-15
