@@ -1,6 +1,6 @@
 #! /usr/bin/usr bash
 set -e
-echo "Enter release version: "
+echo "Enter release version:   # support major | minor | patch | premajor | preminor | prepatch | prerelease | from-git"
 read VERSION
 
 read -p "Releasing $VERSION - are you sure? (y/n)" -n 1 -r
@@ -13,7 +13,7 @@ then
   npm test 2>/dev/null
 
   # publish
-  git tag v$VERSION
+  npm version $VERSION
   git push origin --tags
   git push
   npm publish
