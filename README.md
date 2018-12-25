@@ -130,10 +130,13 @@ const row = {
   otherField: 'other field value',
   modifiedAt: app.knex.raw('CURRENT_TIMESTAMP'),
 };
-// Returns [1] in "mysql", "sqlite", "oracle"; [] in "postgresql" unless the 'returning' parameter is set.
-const [affectedRows] = yield app.knex('posts')
+// Returns int in "mysql", "sqlite", "oracle"; [] in "postgresql" unless the 'returning' parameter is set.
+// following is mysql example
+const affectedRowsCount = yield app.knex('posts')
   .update({row})
   .where(id, 1);
+  
+// affectedRowsCount equals 1
 ```
 
 

@@ -208,10 +208,12 @@ const row = {
   otherField: 'other field value',
   modifiedAt: app.knex.raw('CURRENT_TIMESTAMP'), 
 };
-// Returns [1] in "mysql", "sqlite", "oracle"; [] in "postgresql" unless the 'returning' parameter is set.
-const [affectedRows] = yield app.knex('posts')
+// "mysql", "sqlite", "orace" 的话返回受影响的行数"; "postgresql" 返回数组，如果没有执行 returning 方法，返回空数组 [] 
+const affectedRowsCount = yield app.knex('posts')
   .update({row})
   .where(id, 1);
+  
+// affectedRowsCount equals 1
 ```
 
 ### Delete
