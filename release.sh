@@ -1,4 +1,4 @@
-#! /usr/bin/usr bash
+#! /usr/bin/env bash
 set -e
 echo "Enter release version:   # support major | minor | patch | premajor | preminor | prepatch | prerelease | from-git"
 read VERSION

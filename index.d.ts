@@ -14,10 +14,6 @@ declare module 'egg' {
     knex: Knex;
   }
 
-  interface Context {
-    knex: Knex;
-  }
-
   interface EggAppConfig {
     knex: {
       app: boolean;
