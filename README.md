@@ -60,7 +60,7 @@ exports.knex = {
       // host
       host: 'mysql.com',
       // port
-      port: '3306',
+      port: 3306,
       // username
       user: 'mobile_pub',
       // password

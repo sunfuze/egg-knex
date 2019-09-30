@@ -73,7 +73,7 @@ exports.mysql = {
 	    // host
 	    host: 'mysql',
       // 端口号
-      port: '3306',
+      port: 3306,
       // 用户名
       user: 'mobile_pub',
       // 密码
