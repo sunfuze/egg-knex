@@ -14,7 +14,7 @@ module.exports = app => {
     },
     app: true,
     agent: false,
-    // 单数据库
+    // single database instance
     // client: {
     //   dialect: 'mysql',
     //   connection: {
@@ -25,7 +25,7 @@ module.exports = app => {
     //     database: 'database',
     //   }
     // },
-    // 多数据库
+    // multiple datebase instances
     // clients: {
     //   db1: {
     //     dialect: 'pg',
