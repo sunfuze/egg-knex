@@ -21,8 +21,8 @@ describe('test/multiclient.test.js', () => {
       app.ready(done);
     });
 
-    before(function* () {
-      yield app.knex.get('db1')
+    before(async function () {
+      await app.knex.get('db1')
         .insert([
           { user_id: `multi-${uid}-1`, password: '1' },
           { user_id: `multi-${uid}-2`, password: '2' },
@@ -42,8 +42,8 @@ describe('test/multiclient.test.js', () => {
 
     describe('app.knex.end', function () {
 
-      before(function* () {
-        yield app.knex.get('db1').where('user_id', 'like', `multi-${uid}-%`).del()
+      before(async function () {
+        await app.knex.get('db1').where('user_id', 'like', `multi-${uid}-%`).del()
           .from('npm_auth');
       });
 

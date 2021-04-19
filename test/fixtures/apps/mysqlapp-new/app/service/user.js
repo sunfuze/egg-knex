@@ -1,5 +1,5 @@
 'use strict';
 
-exports.list = function* (ctx) {
-  return yield ctx.app.knex('npm_auth').select();
+exports.list = async function (ctx) {
+  return await ctx.app.knex('npm_auth').select();
 };

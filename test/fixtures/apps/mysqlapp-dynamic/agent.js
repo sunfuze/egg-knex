@@ -10,8 +10,8 @@ module.exports = function(agent) {
   const p = path.join(__dirname, 'run/agent_result.json');
   fs.existsSync(p) && fs.unlinkSync(p);
 
-  co(function* () {
-    const [result] = yield agent.mysql1.raw('select now() as currentTime;');
+  co(async function () {
+    const [result] = await agent.mysql1.raw('select now() as currentTime;');
     fs.writeFileSync(p, JSON.stringify(result));
   }).then(done, done);
 };

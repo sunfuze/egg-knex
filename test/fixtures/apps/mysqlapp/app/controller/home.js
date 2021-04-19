@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports = function* () {
-  const users = yield this.service.user.list(this);
+module.exports = async function () {
+  const users = await this.service.user.list(this);
 
   this.body = {
     status: 'success',

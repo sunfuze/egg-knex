@@ -9,8 +9,8 @@ module.exports = function(agent) {
   const p = path.join(__dirname, 'run/agent_result.json');
   fs.existsSync(p) && fs.unlinkSync(p);
 
-  co(function* () {
-    const result = yield agent.knex.raw('select now() as currentTime');
+  co(async function () {
+    const result = await agent.knex.raw('select now() as currentTime');
     fs.writeFileSync(p, JSON.stringify(result[0]));
   }).then(done, done);
 };

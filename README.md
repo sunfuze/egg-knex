@@ -11,10 +11,10 @@
 [download-image]: https://img.shields.io/npm/dm/egg-knex.svg?style=flat-square
 [download-url]: https://npmjs.org/package/egg-knex
 
-
 Knex for egg framework.
 
 [Knex](http://knexjs.org/) is a "batteries included" SQL query builder for Postgres, MSSQL, MySQL, MariaDB, SQLite3, and Oracle. `Knex` compare to `ali-rds`:
+
 1. support multiple type database system
 2. API is all `Promise`, easy to using `async/await`
 3. Community-Driven
@@ -27,13 +27,15 @@ $ npm i --save egg-knex
 ```
 
 ## Configuration
+
 ### Install External Dependencies
+
 - using `mysql` default support, there is no need to install any external things
 - using `mysql2` install dependency `npm i --save mysql2`
 - using `mariadb` install dependency `npm i --save mariasql`
 - using `postgres` install dependency `npm i --save pg`
 - using `mssql` install dependency `npm i --save mssql`
-- using `oracledb` install dependency  `npm i --save oracledb`
+- using `oracledb` install dependency `npm i --save oracledb`
 - using `sqlite` install dependency `npm i --save sqlite3`
 
 ### Enable Plugin
@@ -43,11 +45,12 @@ Edit `${app_root}/config/plugin.js`:
 ```js
 exports.knex = {
   enable: true,
-  package: 'egg-knex',
+  package: "egg-knex",
 };
 ```
 
 ### Add Configurations
+
 Edit `${app_root}/config/config.${env}.js`:
 
 ```js
@@ -55,18 +58,18 @@ exports.knex = {
   // database configuration
   client: {
     // database dialect
-    dialect: 'mysql',
+    dialect: "mysql",
     connection: {
       // host
-      host: 'mysql.com',
+      host: "mysql.com",
       // port
       port: 3306,
       // username
-      user: 'mobile_pub',
+      user: "mobile_pub",
       // password
-      password: 'password',
+      password: "password",
       // database
-      database: 'mobile_pub',
+      database: "mobile_pub",
     },
     // connection pool
     pool: { min: 0, max: 5 },
@@ -81,10 +84,11 @@ exports.knex = {
 ```
 
 ## Usage
+
 You can access to database instance by using:
 
 ```js
-app.knex
+app.knex;
 ```
 
 ### CURD
@@ -93,8 +97,8 @@ app.knex
 
 ```js
 // insert
-const result = yield app.knex.insert({title: 'Hello World'}).into('posts')
-const insertSuccess = result === 1
+const result = await app.knex.insert({ title: "Hello World" }).into("posts");
+const insertSuccess = result === 1;
 ```
 
 > if you want mysql, sqlite, oracle return ids after insert multiple rows,
@@ -105,45 +109,44 @@ const insertSuccess = result === 1
 
 ```js
 // get one
-const post = yield app.knex.first('*').where('id', 12).from('posts')
+const post = await app.knex.first("*").where("id", 12).from("posts");
 // query
-const results = yield app.knex('posts')
+const results = await app
+  .knex("posts")
   .select()
-  .where({ status: 'draft' })
-  .orderBy('created_at', 'desc')
-  .orderBy('id', 'desc')
-  .orderByRaw('description DESC NULLS LAST')
+  .where({ status: "draft" })
+  .orderBy("created_at", "desc")
+  .orderBy("id", "desc")
+  .orderByRaw("description DESC NULLS LAST")
   .offset(0)
-  .limit(10)
+  .limit(10);
 
 // join
-const results = yield app.knex('posts')
-  .innerJoin('groups', 'groups.id', 'posts.group_id')
-  .select('posts.*', 'groups.name');
+const results = await app
+  .knex("posts")
+  .innerJoin("groups", "groups.id", "posts.group_id")
+  .select("posts.*", "groups.name");
 ```
 
 #### Update
 
 ```js
 const row = {
-  name: 'fengmk2',
-  otherField: 'other field value',
-  modifiedAt: app.knex.raw('CURRENT_TIMESTAMP'),
+  name: "fengmk2",
+  otherField: "other field value",
+  modifiedAt: app.knex.raw("CURRENT_TIMESTAMP"),
 };
 // Returns int in "mysql", "sqlite", "oracle"; [] in "postgresql" unless the 'returning' parameter is set.
 // following is mysql example
-const affectedRowsCount = yield app.knex('posts')
-  .update({row})
-  .where(id, 1);
-  
+const affectedRowsCount = await app.knex("posts").update({ row }).where(id, 1);
+
 // affectedRowsCount equals 1
 ```
-
 
 #### Delete
 
 ```js
-const affectedRows = yield app.knex('table').where({ name: 'fengmk2' }).del();
+const affectedRows = await app.knex("table").where({ name: "fengmk2" }).del();
 ```
 
 ### Transaction
@@ -153,13 +156,13 @@ const affectedRows = yield app.knex('table').where({ name: 'fengmk2' }).del();
 #### Manual commit
 
 ```js
-const trx = yield app.knex.transaction();
+const trx = await app.knex.transaction();
 try {
-  yield trx.insert(row1).into('table');
-  yield trx('table').update(row2);
-  yield trx.commit()
+  await trx.insert(row1).into("table");
+  await trx("table").update(row2);
+  await trx.commit();
 } catch (e) {
-  yield trx.rollback();
+  await trx.rollback();
   throw e;
 }
 ```
@@ -167,9 +170,9 @@ try {
 #### Auto commit
 
 ```js
-const result = yield app.knex.transaction(function* transacting (trx) {
-  yield trx(table).insert(row1);
-  yield trx(table).update(row2).where(condition);
+const result = await app.knex.transaction(async function transacting(trx) {
+  await trx(table).insert(row1);
+  await trx(table).update(row2).where(condition);
   return { success: true };
 });
 ```
@@ -232,13 +235,13 @@ exports.knex = {
 Usage:
 
 ```js
-const mysql = app.knex.get('mysql');
+const mysql = app.knex.get("mysql");
 mysql.raw(sql);
 
-const pg = app.knex.get('postgres');
+const pg = app.knex.get("postgres");
 pg.raw(sql);
 
-const oracle = app.knex.get('oracle');
+const oracle = app.knex.get("oracle");
 oracle.raw(sql);
 ```
 
@@ -247,32 +250,46 @@ oracle.raw(sql);
 - mysql
 
 ```js
-const [results] = yield app.knex.raw('update posts set hits = (hits + ?) where id = ?', [1, postId]);
+const [
+  results,
+] = await app.knex.raw("update posts set hits = (hits + ?) where id = ?", [
+  1,
+  postId,
+]);
 ```
 
 - pg
 
 ```js
-const { rows: result } = yield app.knex.raw('update posts set hits = (hits + ?) where id = ?', [1, postId]);
+const {
+  rows: result,
+} = await app.knex.raw("update posts set hits = (hits + ?) where id = ?", [
+  1,
+  postId,
+]);
 ```
 
 - mssql
 
 ```js
-const result = yield app.knex.raw('update posts set hits = (hits + ?) where id = ?', [1, postId]);
+const result = await app.knex.raw(
+  "update posts set hits = (hits + ?) where id = ?",
+  [1, postId]
+);
 ```
 
-> 
+>
 
 ### Raw
 
 If you want to call literals or functions in mysql , you can use `raw`.
 
 #### Inner Literal
+
 - CURRENT_TIMESTAMP(): The database system current timestamp, you can obtain by `app.knex.fn.now()`.
 
 ```js
-yield app.knex.insert(, {
+await app.knex.insert(, {
   create_time: app.knex.fn.now()
 }).into(table);
 
@@ -284,12 +301,14 @@ yield app.knex.insert(, {
 The following demo showed how to call `CONCAT(s1, ...sn)` funtion in mysql to do string splicing.
 
 ```js
-const first = 'James';
-const last = 'Bond';
-yield app.knex.insert({
-  id: 123,
-  fullname: app.knex.raw(`CONCAT("${first}", "${last}"`),
-}).into(table);
+const first = "James";
+const last = "Bond";
+await app.knex
+  .insert({
+    id: 123,
+    fullname: app.knex.raw(`CONCAT("${first}", "${last}"`),
+  })
+  .into(table);
 
 // INSERT INTO `$table`(`id`, `fullname`) VALUES(123, CONCAT("James", "Bond"))
 ```
