@@ -4,6 +4,7 @@ exports.keys = 'i7oBLQc43aiDCC9zxYrYNw==';
 
 exports.knex = {
   client: {
+    debug: true,
     dialect: 'mysql',
     connection: {
       host: '127.0.0.1',
