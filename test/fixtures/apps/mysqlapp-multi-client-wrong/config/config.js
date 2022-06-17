@@ -36,7 +36,7 @@ exports.knex = {
     },
   ],
   default: {
-    dialect: 'mysql',
+    dialect: 'mysql2',
   },
   agent: true,
 };

@@ -137,7 +137,7 @@ describe('test/knex.test.js', () => {
     });
 
     app.ready(err => {
-      (err.message.includes('ER_ACCESS_DENIED_ERROR')).should.be.true();
+      (err.code).should.equal('ER_ACCESS_DENIED_ERROR');
       done();
     });
   });

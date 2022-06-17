@@ -1,3 +1,10 @@
+4.0.0 / 2022-06-17
+==================
+* chore: update dependencies
+* ts: update index.d.ts, fix Application.knex defination
+* use mysql2 as default dialect
+
+
 2.0.11 / 2018-05-15
 ==================
   * fix: support mysql connection string
