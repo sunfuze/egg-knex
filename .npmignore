@@ -1,0 +1,7 @@
+test
+.autod.conf.js
+.eslintignore
+.eslintrc
+.github
+.travis.yml
+release.sh
