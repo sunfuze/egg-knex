@@ -1,5 +1,5 @@
 import { Logger } from "egg";
-import * as Knex from "knex";
+import { Knex } from "knex";
 import * as Bluebird from "bluebird";
 
 interface Knex {
